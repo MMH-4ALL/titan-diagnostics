@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
+from rich.text import Text
 from typer.testing import CliRunner
 
 from titan import cli
@@ -63,7 +64,7 @@ def test_report_default_privacy_review_and_file(isolated_cli: Snapshot, tmp_path
     assert json.loads(result.stdout)["privacy"] == "sensitive identifiers redacted"
     result = runner.invoke(cli.app, ["report", "--include-sensitive"])
     assert result.exit_code == 2
-    assert "--review" in result.output
+    assert "--review" in Text.from_ansi(result.output).plain
     path = tmp_path / "detailed.json"
     declined = runner.invoke(
         cli.app, ["report", "--include-sensitive", "--review", "--output", str(path)], input="n\n"

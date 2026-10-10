@@ -42,7 +42,7 @@ def run_command(args: Sequence[str], timeout: float = 5.0) -> CommandResult:
             errors="replace",
             timeout=timeout,
             shell=False,
-            creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0) if os.name == "nt" else 0,
         )
     except FileNotFoundError:
         return CommandResult(error=f"{os.path.basename(args[0])} is not installed")

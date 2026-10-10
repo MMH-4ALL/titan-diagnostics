@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import platform
 import re
+import sys
 from typing import Any
 
 from titan.core.models import Section
@@ -83,6 +84,8 @@ def _mapping(value: Any) -> dict[str, Any]:
 
 def _registry_cpu() -> dict[str, str]:
     """HKLM processor metadata is a read-only fallback when CIM is restricted."""
+    if sys.platform != "win32":
+        return {}
     try:
         import winreg
 
