@@ -4,7 +4,7 @@ An offline system monitoring and diagnostics terminal for Windows and Linux.
 
 Titan reads real operating system counters, explains diagnostic findings, and never modifies storage. History recording is off by default. Reports stay local and redact personal identifiers by default.
 
-Titan 0.2.1 is available in [GitHub releases](https://github.com/MMH-4ALL/titan-diagnostics/releases/tag/v0.2.1), with verified Windows and Linux command installation. See [verification](docs/verification.md) for executed checks and hardware limitations.
+Titan 0.2.2 adds a dedicated Themes tab with eight palettes. Selecting a theme applies it and saves it for your next launch. See [verification](docs/verification.md) for executed checks and hardware limitations.
 
 ![Actual running Titan dashboard with real Windows measurements](docs/screenshots/overview.png)
 
@@ -21,11 +21,11 @@ from the collectors. Traces show observed ranges rather than fixed percent axes.
 Install a GitHub release with npm (Node.js 20+):
 
 ```console
-npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.1.tgz
+npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.2.tgz
 titan
 ```
 
-The published npm package includes Windows x64 and Linux x64 executables; those
+Release npm packages include Windows x64 and Linux x64 executables; those
 targets do not need Python. Other supported architectures require Python 3.11+
 with venv support and a first-run dependency download. Once prepared, Titan runs offline.
 
@@ -73,7 +73,7 @@ Click a table header to sort. Use Tab to move focus. Text input receives ordinar
 
 CPU and per-core usage, frequency where accessible, memory and swap, running processes, physical drives and mounted volumes, disk transfer counters, network interfaces and rates, accessible connections, battery charge, and optional GPU/SMART telemetry. Missing data is explicitly unavailable, never replaced with fabricated measurements.
 
-Five themes include Titan Dark, Arctic, Matrix, Monochrome and High Contrast. Themes preview in Settings and persist when saved. Live buffers are bounded; expensive device inventory is cached. Slow hardware queries run away from the UI thread.
+Open **Themes** from the sidebar, `/` search or Ctrl+P. Choose Titan Dark, Arctic, Matrix, Monochrome, High Contrast, Ember, Ocean or Paper; apply immediately and save for the next launch. The Settings theme selector remains available. Live buffers are bounded; expensive device inventory is cached. Slow hardware queries run away from the UI thread.
 
 Diagnostics use offline rules, with elapsed-time evidence for sustained CPU/memory/process activity. Findings include severity, evidence, explanation, possible causes, next steps, confidence and access requirements. Titan does not produce a universal health score or infer throttling from temperature.
 

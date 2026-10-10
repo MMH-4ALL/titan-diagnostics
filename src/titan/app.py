@@ -37,6 +37,7 @@ from textual.widgets import (
 from titan.art import COMPONENT_ART, WORDMARK
 from titan.core.collectors import Collector
 from titan.core.config import (
+    THEMES,
     Config,
     ConfigError,
     default_data_dir,
@@ -69,11 +70,23 @@ PAGES = [
     ("diagnostics", "Diagnostics"),
     ("history", "History"),
     ("reports", "Reports"),
+    ("themes", "Themes"),
     ("settings", "Settings"),
     ("monitoring", "Monitoring"),
     ("hardware", "Hardware map"),
     ("compare", "Snapshots"),
 ]
+
+THEME_OPTIONS = {
+    "titan-dark": ("Titan Dark", "Amber on charcoal"),
+    "arctic": ("Arctic", "Cool blue on snow"),
+    "matrix": ("Matrix", "Phosphor green on black"),
+    "monochrome": ("Monochrome", "Soft silver on graphite"),
+    "high-contrast": ("High Contrast", "Bright yellow on pure black"),
+    "ember": ("Ember", "Warm orange on deep brown"),
+    "ocean": ("Ocean", "Cyan on midnight blue"),
+    "paper": ("Paper", "Ink on warm ivory"),
+}
 
 
 def number(value: Any, suffix: str = "", precision: int = 1) -> str:
@@ -249,6 +262,10 @@ class TitanApp(App[None]):
     .settings-row { height: auto; margin-bottom: 1; }
     .settings-row Label { width: 26; content-align: left middle; }
     .settings-row Select { width: 1fr; }
+    #theme-current { height: 2; color: $primary; text-style: bold; }
+    .theme-choice { width: 100%; height: 3; margin: 0; border: ascii $boost; background: $background; text-align: left; content-align: left middle; padding: 0 1; }
+    .theme-choice:hover, .theme-choice:focus { border: ascii $primary; }
+    .theme-choice.active { border: ascii $primary; background: $primary 10%; }
     #diagnostic-list, #network-result { height: auto; }
     #history-graph { height: 6; border: ascii $boost; }
     #record-state { color: $text-muted; }
@@ -331,6 +348,9 @@ class TitanApp(App[None]):
             ("matrix", "#4ADE80", "#86EFAC", "#06110A", "#0F2115", "#E0FFE9", True),
             ("monochrome", "#D4D4D4", "#A3A3A3", "#111111", "#202020", "#F5F5F5", True),
             ("high-contrast", "#FFFF00", "#00FFFF", "#000000", "#000000", "#FFFFFF", True),
+            ("ember", "#FF9B54", "#E8C18A", "#180F0C", "#2B1B15", "#F8E8D8", True),
+            ("ocean", "#64D8E8", "#7DA7F7", "#07141F", "#102638", "#E1F2FA", True),
+            ("paper", "#754C24", "#37634B", "#F5F0E5", "#FFFCF4", "#27231D", False),
         ]
         for name, primary, secondary, background, surface, foreground, dark in palettes:
             self.register_theme(
@@ -502,16 +522,7 @@ class TitanApp(App[None]):
                     with Horizontal(classes="settings-row"):
                         yield Label("Theme preview")
                         yield Select(
-                            [
-                                (label, key)
-                                for key, label in [
-                                    ("titan-dark", "Titan Dark"),
-                                    ("arctic", "Arctic"),
-                                    ("matrix", "Matrix"),
-                                    ("monochrome", "Monochrome"),
-                                    ("high-contrast", "High Contrast"),
-                                ]
-                            ],
+                            [(THEME_OPTIONS[key][0], key) for key in THEMES],
                             value=self.config.theme,
                             allow_blank=False,
                             id="theme-select",
@@ -530,6 +541,29 @@ class TitanApp(App[None]):
                     yield Static(
                         "Keyboard: 1–9 pages · / search · Ctrl+P commands · ? help", classes="intro"
                     )
+                with VerticalScroll(id="themes", classes="page"):
+                    yield Label(Text("[ THEMES / TERMINAL PALETTES ]"), classes="page-title")
+                    yield Static(
+                        "Choose a look. It applies immediately and is saved for your next launch.",
+                        classes="intro",
+                    )
+                    yield Static(
+                        Text(f"[ ACTIVE ] {THEME_OPTIONS[self.config.theme][0]}"),
+                        id="theme-current",
+                    )
+                    for name in THEMES:
+                        label, description = THEME_OPTIONS[name]
+                        palette = self.available_themes[name]
+                        yield Button(
+                            Text.assemble(
+                                (f"[ {label} ]", f"bold {palette.primary} on {palette.background}"),
+                                f"  {description}",
+                            ),
+                            id=f"theme-{name}",
+                            classes="theme-choice active"
+                            if name == self.config.theme
+                            else "theme-choice",
+                        )
                 with VerticalScroll(id="monitoring", classes="page"):
                     yield Label(Text("[ 13 / MONITORING ]"), classes="page-title")
                     yield Static(
@@ -693,6 +727,8 @@ class TitanApp(App[None]):
             self.export(key[7:])
         elif key.startswith("history-"):
             self.show_history(int(key[8:]))
+        elif key.startswith("theme-") and key[6:] in THEMES:
+            self.choose_theme(key[6:])
         elif key == "settings-save":
             self.save_preferences()
         elif key == "settings-reset":
@@ -748,6 +784,24 @@ class TitanApp(App[None]):
         if isinstance(event.value, str):
             self.theme = event.value
             self.config = replace(self.config, theme=event.value)
+            self.update_theme_selection()
+
+    def update_theme_selection(self) -> None:
+        self.query_one("#theme-current", Static).update(
+            Text(f"[ ACTIVE ] {THEME_OPTIONS[self.config.theme][0]}")
+        )
+        for button in self.query(".theme-choice"):
+            button.set_class(button.id == f"theme-{self.config.theme}", "active")
+
+    def choose_theme(self, name: str) -> None:
+        self.theme = name
+        self.config = replace(self.config, theme=name)
+        self.query_one("#theme-select", Select).value = name
+        self.update_theme_selection()
+        try:
+            save_config(self.config, self.config_path)
+        except (OSError, ConfigError) as exc:
+            self.notify(f"Theme applied; could not save it: {exc}", severity="error")
 
     @on(Switch.Changed, "#record-switch")
     def change_recording(self, event: Switch.Changed) -> None:
@@ -1412,7 +1466,7 @@ class TitanApp(App[None]):
         self.push_screen(
             InfoDialog(
                 f"Titan help / {dict(PAGES)[self.page]}",
-                "1–9: monitoring pages\n/: search pages and processes\nCtrl+P: command palette\nR: refresh   D: diagnose   Q: quit\nTab / Shift+Tab: move focus   Enter: activate\nClick table headers to sort. Scroll for more data.\nProcesses: Enter inspects; X opens termination confirmation.\nSettings: themes preview immediately; save persists them.\nHistory is off until you choose to record it.\nStorage checks are read-only. Optional sensors may need vendor tools or permissions.\n\n"
+                "1–9: monitoring pages\n/: search pages and processes\nCtrl+P: command palette\nR: refresh   D: diagnose   Q: quit\nTab / Shift+Tab: move focus   Enter: activate\nClick table headers to sort. Scroll for more data.\nProcesses: Enter inspects; X opens termination confirmation.\nThemes: select a palette to apply and save it immediately.\nSettings: save persists other preferences.\nHistory is off until you choose to record it.\nStorage checks are read-only. Optional sensors may need vendor tools or permissions.\n\n"
                 + self.section_notes(self.page),
             )
         )

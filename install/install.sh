@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-version=0.2.1
+version=0.2.2
 release_url=${TITAN_RELEASE_URL:-https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download}
 prefix=${TITAN_INSTALL_DIR:-${XDG_DATA_HOME:-"$HOME/.local/share"}/titan/install}
 bin_dir="$HOME/.local/bin"

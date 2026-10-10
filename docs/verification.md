@@ -169,6 +169,15 @@ The 0.2.1 release fixes CRLF line endings found during the initial public Linux
 installer check. Shell scripts are stored with LF, release copying normalizes
 line endings, and regression checks cover the published script before release.
 
+## Themes revision (0.2.2)
+
+On 2026-10-10, 14 focused Windows UI tests passed for the Themes page and existing
+navigation/settings/monitoring behavior. The checks click all eight themes,
+verify immediate application and saved configuration, restore the saved palette
+on a fresh launch, and use search and Enter to select a theme at 40×16.
+Ruff checks/formatting and mypy pass. The palettes are Titan Dark, Arctic, Matrix,
+Monochrome, High Contrast, Ember, Ocean and Paper.
+
 ## Hardware verification procedure
 
 1. Install the wheel/native distribution on a clean target system as a regular user.

@@ -1,11 +1,16 @@
-# Titan 0.2.1
+# Titan 0.2.2
 
 The source delivery includes a working Textual application, real local monitoring,
 offline diagnostic rules, read-only storage troubleshooting and optional SMART,
 safe process management, explicit endpoint tests, opt-in SQLite history, validated
-TOML settings and redacted JSON/CSV/text/standalone HTML reports. Five themes,
+TOML settings and redacted JSON/CSV/text/standalone HTML reports. Eight themes,
 keyboard navigation, search, command palette, sortable tables and responsive
 layouts are implemented. Samples are clearly marked synthetic.
+
+The new Themes tab offers Titan Dark, Arctic, Matrix, Monochrome, High Contrast,
+Ember, Ocean and Paper. Selecting a theme applies it immediately and saves it for the next
+launch. The existing Settings selector remains available; Themes also opens
+through the sidebar, search and command palette.
 
 All eight requested additions are implemented: drive connection timeline,
 disk latency/IOPS/queue monitoring, SMART trends and alerts, before/after
@@ -22,14 +27,21 @@ installers support Windows and Linux. Installation can download dependencies;
 subsequent app runs are offline. The npm registry name is not published; use the
 GitHub release tarball. The release workflow builds Windows/Linux independently.
 
-The [0.2.1 release workflow](https://github.com/MMH-4ALL/titan-diagnostics/actions/runs/38079325263)
+The Themes revision passed 14 focused Windows UI tests, including all eight
+palettes, saved-theme restoration, keyboard access at 40×16 and existing Settings
+compatibility. Ruff checking/formatting and mypy also pass. The release workflow
+checks the full suite and builds each platform before publishing assets.
+
+The preceding installation baseline is 0.2.1. Its
+[release workflow](https://github.com/MMH-4ALL/titan-diagnostics/actions/runs/38079325263)
 passed on Windows 2022 and Ubuntu 22.04 with Python 3.12: 166 Python tests,
 four Node launcher tests, Ruff checks/formatting, mypy and independent native
-builds. Windows x64 and Linux x64 executables, the Python wheel/source archive,
-installers and a dual-platform npm tarball are published in the public
+builds. That release's Windows x64 and Linux x64 executables, Python wheel/source
+archive, installers and dual-platform npm tarball are published in the public
 [GitHub release](https://github.com/MMH-4ALL/titan-diagnostics/releases/tag/v0.2.1).
-The actual public curl and npm downloads were installed and launched on Windows
-and in a Linux sandbox. Linux hardware certification is not claimed.
+The 0.2.1 public curl and npm downloads were installed and launched on Windows
+and in a Linux sandbox. See [verification](docs/verification.md) for the executed checks. Linux hardware
+certification is not claimed.
 
 The native application is unsigned. Ordinary monitoring does not need elevation;
 optional sensor access depends on the OS, driver and hardware. No telemetry,

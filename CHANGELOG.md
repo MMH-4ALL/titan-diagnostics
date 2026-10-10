@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 — 2026-10-10
+
+- Added a dedicated Themes tab with eight palettes: Titan Dark, Arctic, Matrix, Monochrome, High Contrast, Ember, Ocean and Paper.
+- Apply a theme immediately and save it for the next launch; the existing Settings theme selector remains available.
+
 ## 0.2.1 — 2026-10-10
 
 - Fixed Linux curl installer line endings across Windows build artifacts and added portable-script checks.

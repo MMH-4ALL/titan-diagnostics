@@ -27,7 +27,16 @@ class Config:
     sustained_seconds: float = 10.0
 
 
-THEMES = ("titan-dark", "arctic", "matrix", "monochrome", "high-contrast")
+THEMES = (
+    "titan-dark",
+    "arctic",
+    "matrix",
+    "monochrome",
+    "high-contrast",
+    "ember",
+    "ocean",
+    "paper",
+)
 
 
 def default_data_dir() -> Path:
