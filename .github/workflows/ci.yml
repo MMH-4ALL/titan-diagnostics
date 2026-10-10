@@ -1,0 +1,56 @@
+name: Checks and packages
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python: ['3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: mypy
+      - run: pytest --cov=titan --cov-report=term-missing
+      - run: node --test npm/test/launcher.test.cjs
+      - run: python -m build
+      - run: titan --version
+      - run: titan doctor --json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-${{ matrix.os }}-${{ matrix.python }}
+          path: dist/*
+  native:
+    needs: verify
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install ".[bundle]"
+      - run: python scripts/build_native.py
+      - name: Check Windows executable
+        if: runner.os == 'Windows'
+        run: ./dist/native/titan/titan.exe --version
+      - name: Check Linux executable
+        if: runner.os == 'Linux'
+        run: ./dist/native/titan/titan --version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: titan-native-${{ runner.os }}
+          path: dist/native/titan/
