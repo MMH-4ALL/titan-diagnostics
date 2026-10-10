@@ -4,7 +4,7 @@ An offline system monitoring and diagnostics terminal for Windows and Linux.
 
 Titan reads real operating system counters, explains diagnostic findings, and never modifies storage. History recording is off by default. Reports stay local and redact personal identifiers by default.
 
-This repository contains the working 0.2 release candidate. See `docs/verification.md` for measured validation and hardware limitations.
+Titan 0.2.1 is available in [GitHub releases](https://github.com/MMH-4ALL/titan-diagnostics/releases/tag/v0.2.1), with verified Windows and Linux command installation. See [verification](docs/verification.md) for executed checks and hardware limitations.
 
 ![Actual running Titan dashboard with real Windows measurements](docs/screenshots/overview.png)
 
@@ -25,11 +25,11 @@ npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/dow
 titan
 ```
 
-The Windows x64 package includes the standalone executable. Other targets use a
-bundled native executable when available, otherwise Python 3.11+ with venv support
-and a first-run dependency download. Once prepared, Titan runs offline.
+The published npm package includes Windows x64 and Linux x64 executables; those
+targets do not need Python. Other supported architectures require Python 3.11+
+with venv support and a first-run dependency download. Once prepared, Titan runs offline.
 
-Linux curl installer:
+Linux curl installer (Python 3.11+ with venv support and curl):
 
 ```sh
 curl -fsSL https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/install.sh | sh
@@ -37,8 +37,7 @@ titan
 ```
 
 For Windows curl/PowerShell, one-off npx runs, source installation, updates and
-uninstall instructions, see [installation](docs/installation.md). Download
-commands require a published GitHub release. The npm registry name is not yet
+uninstall instructions, see [installation](docs/installation.md). The npm registry name is not yet
 published; use the release tarball URL or a local `.tgz`.
 
 Python 3.11 or newer:
@@ -53,7 +52,7 @@ titan diagnose
 titan doctor
 ```
 
-Packaged Windows executables and Python distributions are in the adjacent release folder when built on this machine. Linux executables must be built on Linux.
+Standalone Windows/Linux executables and Python distributions are available in [releases](https://github.com/MMH-4ALL/titan-diagnostics/releases/latest). Native executables are built independently on each platform.
 
 ## Keyboard
 

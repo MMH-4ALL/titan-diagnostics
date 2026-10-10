@@ -2,7 +2,8 @@
 
 ## npm and npx
 
-Node.js 20 or newer. Once a GitHub release is published:
+Node.js 20 or newer. The public 0.2.1 npm tarball includes Windows x64 and Linux
+x64 native executables:
 
 ```console
 npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.1.tgz

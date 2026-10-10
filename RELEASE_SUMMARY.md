@@ -1,4 +1,4 @@
-# Titan 0.2.1 release candidate
+# Titan 0.2.1
 
 The source delivery includes a working Textual application, real local monitoring,
 offline diagnostic rules, read-only storage troubleshooting and optional SMART,
@@ -22,12 +22,14 @@ installers support Windows and Linux. Installation can download dependencies;
 subsequent app runs are offline. The npm registry name is not published; use the
 GitHub release tarball. The release workflow builds Windows/Linux independently.
 
-Automated tests, Ruff checks/formatting and mypy pass on Windows/Python 3.12. The Python
-wheel and source archive build and install. A Windows x64 standalone console
-distribution is included; extract the entire folder and run `titan.exe`. Linux
-source/providers and independent CI/build workflows are included. A Linux binary
-is distributed only when that independent build succeeds; Linux hardware
-certification is not claimed.
+The [0.2.1 release workflow](https://github.com/MMH-4ALL/titan-diagnostics/actions/runs/38079325263)
+passed on Windows 2022 and Ubuntu 22.04 with Python 3.12: 166 Python tests,
+four Node launcher tests, Ruff checks/formatting, mypy and independent native
+builds. Windows x64 and Linux x64 executables, the Python wheel/source archive,
+installers and a dual-platform npm tarball are published in the public
+[GitHub release](https://github.com/MMH-4ALL/titan-diagnostics/releases/tag/v0.2.1).
+The actual public curl and npm downloads were installed and launched on Windows
+and in a Linux sandbox. Linux hardware certification is not claimed.
 
 The native application is unsigned. Ordinary monitoring does not need elevation;
 optional sensor access depends on the OS, driver and hardware. No telemetry,

@@ -1,14 +1,17 @@
 # Verified behavior and release boundaries
 
-This is a working 0.2.0 release candidate, not a claim that every feature in the
-original brief or every Windows/Linux device has been certified. No GitHub
-repository was created and the supplied CI workflow has not been run remotely.
+Titan 0.2.1 is published in the public
+[repository](https://github.com/MMH-4ALL/titan-diagnostics) and
+[release](https://github.com/MMH-4ALL/titan-diagnostics/releases/tag/v0.2.1).
+The Windows/Linux release workflow and public command installation were executed
+successfully. Hardware-specific limitations remain documented below.
 
 ## Executed locally
 
 Validation dates: 2026-10-09 and monitoring/ASCII revision 2026-10-10.
 Host: Windows 11, Python 3.12.14, Textual 8.2.8,
-psutil 7.2.2. All 160 automated tests pass. Ruff checking, Ruff formatting and
+psutil 7.2.2. The monitoring/ASCII revision passed 160 automated tests; the final
+installation revision passes 166. Ruff checking, Ruff formatting and
 mypy pass. The source archive and universal Python wheel build; installing the
 wheel produces a working `titan` console command. PyInstaller produces a native
 Windows x64 console distribution; native version/help/doctor checks were executed.
@@ -82,8 +85,9 @@ and writes at most at the configured recording interval (default 10 seconds).
 
 ## Not yet verified on real hardware
 
-- Linux live collection and native executable; Linux provider parsing is tested
-  with fixtures and the workflow is configured to run on Linux independently.
+- Linux live hardware collection; provider parsing is tested with fixtures.
+  The Linux native build and CLI launch passed remotely as documented below;
+  that does not certify hardware readings on a physical Linux device.
 - Real ATA/SATA/USB/NVMe SMART passthrough: smartctl was absent on this host.
   Structured parsing, status-bit interpretation and unavailable fallback are tested.
 - External drive failure, RAW/encrypted volumes, USB bridge-only states and
@@ -135,9 +139,35 @@ reuses it on the next run. The PowerShell installer preserves PATH when requeste
 verifies its download, and launches from a path containing spaces and Unicode.
 Damaged checksums cannot change an existing installation; valid updates switch
 the managed command and preserve CLI error exit codes.
-Shell syntax was checked with Git's sh; that does not establish a Linux install.
-Remote release and Linux installer validation are recorded separately after
-execution; the workflow itself is not evidence that it ran successfully.
+The local seven-file checksum manifest, source and Windows ZIP integrity,
+wheel integrity, 29 packaged Python files, npm metadata and included licenses
+were checked after the final 0.2.1 build.
+
+## Executed public release checks
+
+On 2026-10-10, the [0.2.1 release run](https://github.com/MMH-4ALL/titan-diagnostics/actions/runs/38079325263)
+completed successfully at source commit
+`5ae1f8d4e8cba8591d0f14322b7f42d8899e6bc7`. Its Windows 2022 and Ubuntu 22.04
+jobs each passed 166 Python tests, four Node tests, Ruff checks/formatting,
+mypy, Python packaging, independent native builds and native version/help checks.
+The publish job assembled both native runtimes into one npm tarball, installed
+and launched that package on Linux, and published checksummed GitHub assets.
+
+The actual public `releases/latest/download` URLs were then checked separately:
+
+- Windows: the downloaded PowerShell installer installed into an isolated path
+  containing spaces and Unicode, without changing PATH, and its managed command
+  printed `Titan 0.2.1`. A fresh global npm install from the public tarball also
+  printed `Titan 0.2.1`.
+- Linux sandbox: the downloaded shell installer created a private Python runtime
+  using Python 3.13.13, and its command passed version/help checks. A separate
+  npm install using Node 20.20.2/npm 10.8.2 ran the bundled Linux native executable
+  and printed `Titan 0.2.1`. These are install/launch checks, not physical-hardware
+  validation or prolonged terminal-session testing.
+
+The 0.2.1 release fixes CRLF line endings found during the initial public Linux
+installer check. Shell scripts are stored with LF, release copying normalizes
+line endings, and regression checks cover the published script before release.
 
 ## Hardware verification procedure
 
