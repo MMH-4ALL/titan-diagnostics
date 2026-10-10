@@ -1,0 +1,62 @@
+metric,value
+schema_version,1
+collected_at,2026-10-09T12:00:15+00:00
+privacy,sensitive identifiers redacted
+tools.titan,0.1.0
+tools.python,3.12.14
+tools.psutil,7.2.2
+snapshot.timestamp,1791547215.0
+snapshot.platform,SYNTHETIC SAMPLE — not hardware measurements
+snapshot.sections.system.data.sample_data,True
+snapshot.sections.system.data.notice,All measurements in this file are synthetic report examples.
+snapshot.sections.system.error,unavailable
+snapshot.sections.cpu.data.model,Example processor
+snapshot.sections.cpu.data.logical_cores,8
+snapshot.sections.cpu.data.percent,95.0
+snapshot.sections.cpu.data.temperature_c,unavailable
+snapshot.sections.cpu.unavailable[0],Example: CPU temperature not exposed
+snapshot.sections.cpu.error,unavailable
+snapshot.sections.memory.data.total,17179869184
+snapshot.sections.memory.data.used,8589934592
+snapshot.sections.memory.data.available,8589934592
+snapshot.sections.memory.data.percent,50.0
+snapshot.sections.memory.error,unavailable
+snapshot.sections.storage.data.volumes[0].mountpoint,[redacted]
+snapshot.sections.storage.data.volumes[0].total,107374182400
+snapshot.sections.storage.data.volumes[0].free,2147483648
+snapshot.sections.storage.data.volumes[0].percent,98.0
+snapshot.sections.storage.data.read_bps,250000
+snapshot.sections.storage.data.write_bps,100000
+snapshot.sections.storage.unavailable[0],Example: smartctl not installed
+snapshot.sections.storage.error,unavailable
+snapshot.sections.network.data.download_bps,12345
+snapshot.sections.network.data.upload_bps,2345
+snapshot.sections.network.error,unavailable
+snapshot.sections.battery.data.present,False
+snapshot.sections.battery.data.percent,unavailable
+snapshot.sections.battery.error,unavailable
+snapshot.sections.gpu.unavailable[0],Example: no GPU telemetry
+snapshot.sections.gpu.error,unavailable
+findings[0].id,cpu-sustained
+findings[0].title,Sustained high CPU activity
+findings[0].severity,warning
+findings[0].evidence,CPU utilization was 95.0–95.0% across 15 contiguous observations over 14.0 seconds; configured threshold 90%.
+findings[0].explanation,Sustained CPU demand can delay other applications. Utilization alone does not prove overheating or throttling.
+findings[0].possible_causes[0],An application is performing intensive work
+findings[0].possible_causes[1],Several applications are active
+findings[0].possible_causes[2],Background updates or indexing
+findings[0].next_step,Inspect the highest CPU-consuming processes and determine whether their work is expected before requesting termination.
+findings[0].confidence,high
+findings[0].requires_admin,False
+findings[1].id,disk-space-0
+findings[1].title,A mounted volume is nearly full
+findings[1].severity,warning
+findings[1].evidence,Volume [redacted] uses 98.0% of 100.0 GiB; 2.00 GiB remains.
+findings[1].explanation,"Low filesystem space can prevent updates and application writes. This measures the mounted filesystem, not physical drive health."
+findings[1].possible_causes[0],Accumulated application data
+findings[1].possible_causes[1],Large downloads or media
+findings[1].possible_causes[2],Temporary files
+findings[1].next_step,Review storage usage and move or remove only files you recognize after backing up important data.
+findings[1].confidence,high
+findings[1].requires_admin,False
+interpretation,Read-only observations and rule-based findings; unavailable metrics are not zero. SMART results cannot guarantee future drive reliability. No universal health score is used.

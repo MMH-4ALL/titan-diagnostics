@@ -1,0 +1,13 @@
+{
+  "name": "titan-diagnostics",
+  "version": "0.2.0",
+  "description": "Offline system diagnostics and monitoring for Windows and Linux",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/MMH-4ALL/titan-diagnostics.git" },
+  "bin": { "titan": "bin/titan.cjs" },
+  "engines": { "node": ">=20" },
+  "os": ["win32", "linux"],
+  "files": ["bin", "bootstrap.py", "wheel", "native", "LICENSE", "THIRD_PARTY_NOTICES.md", "README.md"],
+  "scripts": { "test": "node --test test/*.test.cjs" },
+  "keywords": ["terminal", "diagnostics", "monitoring", "windows", "linux", "tui"]
+}

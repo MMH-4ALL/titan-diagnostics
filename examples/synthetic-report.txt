@@ -1,0 +1,79 @@
+TITAN · SYSTEM DIAGNOSTIC REPORT
+Collected: 2026-10-09T12:00:15+00:00
+Privacy: sensitive identifiers redacted
+Platform: SYNTHETIC SAMPLE — not hardware measurements
+
+SYSTEM
+{
+  "sample_data": true,
+  "notice": "All measurements in this file are synthetic report examples."
+}
+
+CPU
+{
+  "model": "Example processor",
+  "logical_cores": 8,
+  "percent": 95.0,
+  "temperature_c": null
+}
+Unavailable: Example: CPU temperature not exposed
+
+MEMORY
+{
+  "total": 17179869184,
+  "used": 8589934592,
+  "available": 8589934592,
+  "percent": 50.0
+}
+
+STORAGE
+{
+  "drives": [],
+  "volumes": [
+    {
+      "mountpoint": "[redacted]",
+      "total": 107374182400,
+      "free": 2147483648,
+      "percent": 98.0
+    }
+  ],
+  "read_bps": 250000,
+  "write_bps": 100000
+}
+Unavailable: Example: smartctl not installed
+
+NETWORK
+{
+  "interfaces": [],
+  "download_bps": 12345,
+  "upload_bps": 2345
+}
+
+BATTERY
+{
+  "present": false,
+  "percent": null
+}
+
+GPU
+{
+  "items": []
+}
+Unavailable: Example: no GPU telemetry
+
+DIAGNOSTIC FINDINGS
+[WARNING] Sustained high CPU activity
+Evidence: CPU utilization was 95.0–95.0% across 15 contiguous observations over 14.0 seconds; configured threshold 90%.
+Explanation: Sustained CPU demand can delay other applications. Utilization alone does not prove overheating or throttling.
+Possible causes: An application is performing intensive work; Several applications are active; Background updates or indexing
+Next step: Inspect the highest CPU-consuming processes and determine whether their work is expected before requesting termination.
+Confidence: high; elevated access needed: False
+
+[WARNING] A mounted volume is nearly full
+Evidence: Volume [redacted] uses 98.0% of 100.0 GiB; 2.00 GiB remains.
+Explanation: Low filesystem space can prevent updates and application writes. This measures the mounted filesystem, not physical drive health.
+Possible causes: Accumulated application data; Large downloads or media; Temporary files
+Next step: Review storage usage and move or remove only files you recognize after backing up important data.
+Confidence: high; elevated access needed: False
+
+Read-only observations and rule-based findings; unavailable metrics are not zero. SMART results cannot guarantee future drive reliability. No universal health score is used.
