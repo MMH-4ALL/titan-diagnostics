@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "titan-diagnostics"
-version = "0.2.0"
+version = "0.2.1"
 description = "Offline system monitoring and evidence-based diagnostics in your terminal"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -24,7 +24,7 @@ titan = "titan.cli:main"
 packages = ["src/titan"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "tests", "scripts", "install", "npm", "docs", "examples", "third_party_licenses", ".github", ".gitignore", "*.md", "LICENSE", "pyproject.toml", "requirements-lock.txt"]
+include = ["src", "tests", "scripts", "install", "npm", "docs", "examples", "third_party_licenses", ".github", ".gitignore", ".gitattributes", "*.md", "LICENSE", "pyproject.toml", "requirements-lock.txt"]
 exclude = ["**/__pycache__", "**/*.pyc"]
 
 [tool.pytest.ini_options]

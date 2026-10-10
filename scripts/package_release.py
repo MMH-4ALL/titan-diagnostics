@@ -40,7 +40,10 @@ def main() -> None:
             shutil.copy2(path, release / path.name)
     for path in (root / "install").iterdir():
         if path.is_file():
-            shutil.copy2(path, release / path.name)
+            if path.suffix == ".sh":
+                (release / path.name).write_bytes(path.read_bytes().replace(b"\r\n", b"\n"))
+            else:
+                shutil.copy2(path, release / path.name)
     checksums = "\n".join(
         f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.name}"
         for path in sorted(release.iterdir())

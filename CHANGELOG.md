@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 — 2026-10-10
+
+- Fixed Linux curl installer line endings across Windows build artifacts and added portable-script checks.
+- Verified Linux type checks and color-independent Windows CLI assertions in real GitHub builds.
+
 ## 0.2.0 — 2026-10-10 (release candidate)
 
 - Added an npm/npx launcher, checked curl installers for Windows/Linux, private Python fallback runtimes, and GitHub release packaging.

@@ -1,4 +1,4 @@
-# Titan 0.2.0 release candidate
+# Titan 0.2.1 release candidate
 
 The source delivery includes a working Textual application, real local monitoring,
 offline diagnostic rules, read-only storage troubleshooting and optional SMART,

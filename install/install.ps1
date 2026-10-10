@@ -8,7 +8,7 @@ param(
     [switch]$NoPathUpdate
 )
 $ErrorActionPreference = 'Stop'
-$version = '0.2.0'
+$version = '0.2.1'
 $archiveName = "Titan-$version-windows-x64.zip"
 if ([Environment]::OSVersion.Platform -ne 'Win32NT') { throw 'Use install.sh on Linux.' }
 if (-not [Environment]::Is64BitOperatingSystem) { throw 'The Windows release requires a 64-bit operating system.' }

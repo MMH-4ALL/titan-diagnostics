@@ -21,7 +21,7 @@ from the collectors. Traces show observed ranges rather than fixed percent axes.
 Install a GitHub release with npm (Node.js 20+):
 
 ```console
-npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.0.tgz
+npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.1.tgz
 titan
 ```
 

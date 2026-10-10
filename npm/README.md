@@ -2,9 +2,9 @@
 
 Offline system diagnostics and monitoring in your terminal, for Windows and Linux.
 
-Install this release tarball with `npm install -g ./titan-diagnostics-0.2.0.tgz`.
+Install this release tarball with `npm install -g ./titan-diagnostics-0.2.1.tgz`.
 Then run `titan`, `titan --help`, or `titan overview --json`.
-For a one-off run: `npx --package ./titan-diagnostics-0.2.0.tgz titan --version`.
+For a one-off run: `npx --package ./titan-diagnostics-0.2.1.tgz titan --version`.
 Node.js 20 or newer is required. No npm install scripts run.
 
 If the package contains a native executable for your OS/architecture, Titan runs

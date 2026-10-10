@@ -5,17 +5,17 @@
 Node.js 20 or newer. Once a GitHub release is published:
 
 ```console
-npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.0.tgz
+npm install -g https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.1.tgz
 titan
 titan --version
 titan --help
 ```
 
-You can also install a downloaded file: `npm install -g ./titan-diagnostics-0.2.0.tgz`.
+You can also install a downloaded file: `npm install -g ./titan-diagnostics-0.2.1.tgz`.
 For a one-off run without a global install:
 
 ```console
-npx --yes --package https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.0.tgz titan --version
+npx --yes --package https://github.com/MMH-4ALL/titan-diagnostics/releases/latest/download/titan-diagnostics-0.2.1.tgz titan --version
 ```
 
 Native runtimes bundled for your platform run directly with no Python requirement.
@@ -68,7 +68,7 @@ is required for this route. Existing machine execution-policy restrictions still
 apply; the installer does not change policy. If they prevent running a script,
 use the npm route or extract the standalone ZIP.
 
-For a local archive: `./install.ps1 -ArchivePath ./Titan-0.2.0-windows-x64.zip -ChecksumPath ./SHA256SUMS.txt`.
+For a local archive: `./install.ps1 -ArchivePath ./Titan-0.2.1-windows-x64.zip -ChecksumPath ./SHA256SUMS.txt`.
 `-InstallDir DIR` changes its folder; `-NoPathUpdate` leaves PATH untouched and
 prints the launcher path. Updates keep old version directories and user data.
 To uninstall this method, remove its dedicated installation folder and its
@@ -79,7 +79,7 @@ To uninstall this method, remove its dedicated installation folder and its
 Requires Python 3.11 or newer on Windows 11 or a modern Linux distribution:
 
 ```console
-python -m pip install titan_diagnostics-0.2.0-py3-none-any.whl
+python -m pip install titan_diagnostics-0.2.1-py3-none-any.whl
 titan --version
 titan doctor
 titan

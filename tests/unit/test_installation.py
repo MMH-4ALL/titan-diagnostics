@@ -83,3 +83,8 @@ def test_linux_shim_quotes_paths_and_preserves_unrelated_command(tmp_path, monke
 def test_prepare_rejects_filesystem_root(tmp_path):
     with pytest.raises(ValueError, match="filesystem root"):
         bootstrap.prepare(make_wheel(tmp_path / "titan.whl"), Path(tmp_path.anchor))
+
+
+def test_portable_scripts_have_unix_line_endings():
+    for path in [ROOT / "install/install.sh", ROOT / "npm/bin/titan.cjs"]:
+        assert b"\r" not in path.read_bytes(), f"{path.name} must use LF on every build OS"

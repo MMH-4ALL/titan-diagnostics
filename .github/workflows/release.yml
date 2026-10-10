@@ -28,7 +28,7 @@ jobs:
       - run: node --test npm/test/launcher.test.cjs
       - name: Check Linux installer syntax
         if: runner.os == 'Linux'
-        run: sh -n install/install.sh
+        run: sh -n install/install.sh && sh install/install.sh --help
       - run: python -m build
       - run: python scripts/build_native.py
       - run: python scripts/package_release.py
@@ -74,6 +74,7 @@ jobs:
           sha256sum Titan-*.zip *.whl *.tar.gz *.tgz install.sh install.ps1 bootstrap.py > SHA256SUMS.txt
       - name: Smoke-test installed npm command on Linux
         run: |
+          sh dist/release/install.sh --help
           npm install -g ./dist/release/titan-diagnostics-*.tgz --ignore-scripts
           titan --version
           titan --help

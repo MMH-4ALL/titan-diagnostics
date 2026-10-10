@@ -127,7 +127,7 @@ Logs are bounded operational events; detailed system snapshots are never logged.
 
 ## Command installation verification
 
-Windows checks for the installable-command revision pass: 165 Python tests,
+Windows checks for the installable-command revision pass: 166 Python tests,
 four Node launcher tests, Ruff checks/format and mypy. A fresh isolated npm
 global install runs the bundled native executable without Python bootstrap.
 A separate wheel-only npx package creates a private Python environment and
