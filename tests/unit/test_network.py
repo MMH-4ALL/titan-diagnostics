@@ -53,6 +53,20 @@ def test_resolver_timeout_has_a_single_bounded_worker(monkeypatch):
         release.set()
 
 
+def test_resolver_releases_slot_when_worker_cannot_start(monkeypatch):
+    slot = threading.BoundedSemaphore(1)
+    monkeypatch.setattr(network, "_RESOLVER_SLOT", slot)
+
+    def fail_start(self):
+        raise RuntimeError("cannot start thread")
+
+    monkeypatch.setattr(threading.Thread, "start", fail_start)
+    with pytest.raises(RuntimeError, match="cannot start thread"):
+        network._resolve("example.com", 443, 0.02)
+    assert slot.acquire(blocking=False)
+    slot.release()
+
+
 def test_tcp_timeout_and_missing_ping_are_explicit(monkeypatch):
     class Connection:
         def __enter__(self):

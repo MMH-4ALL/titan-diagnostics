@@ -101,7 +101,8 @@ def _validate_target(target: str) -> str:
 def _resolve(target: str, port: int, timeout: float) -> list[Any]:
     # getaddrinfo has no portable timeout. One bounded daemon worker avoids an
     # unbounded thread pool and cannot keep application shutdown waiting.
-    if not _RESOLVER_SLOT.acquire(blocking=False):
+    slot = _RESOLVER_SLOT
+    if not slot.acquire(blocking=False):
         raise TimeoutError("A previous DNS lookup is still finishing; retry later.")
     result_queue: queue.Queue[Any] = queue.Queue(maxsize=1)
 
@@ -112,9 +113,13 @@ def _resolve(target: str, port: int, timeout: float) -> list[Any]:
             except Exception as exc:
                 result_queue.put((False, exc))
         finally:
-            _RESOLVER_SLOT.release()
+            slot.release()
 
-    threading.Thread(target=worker, name="titan-dns", daemon=True).start()
+    try:
+        threading.Thread(target=worker, name="titan-dns", daemon=True).start()
+    except BaseException:
+        slot.release()
+        raise
     try:
         success, result = result_queue.get(timeout=timeout)
     except queue.Empty as exc:
